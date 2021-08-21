@@ -1,0 +1,11 @@
+node_modules
+
+.ionide
+
+.vscode
+
+attachments
+
+log
+
+client
