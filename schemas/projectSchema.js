@@ -24,21 +24,21 @@ project_stage:{
 
     },
 project_status:{
-    type: Boolean,
+    type: Number,
  
-    default:false 
+    default:0
 },
 client_name:{
     type:String,
     required: true
 },
-manager_id:{
-    type:mongoose.Schema.Types.ObjectId,
+manager_name:{
+    type:String,
     required:true
 },
 end_date:{
     type:Date,
-    required:true
+    required:false
 }   
 
 

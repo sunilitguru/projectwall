@@ -1,4 +1,5 @@
 const User = require('../schemas/userSchema').userModel
+const fs   = require('fs');
 
 const adminService = require('../services/adminService')
 
@@ -43,22 +44,22 @@ const registerEmployee = (req, res)=>{
 
 var addProject =  (req,res)=>{
 
-   
+   console.log(req.file)
     var project = {
-        project_name: req.body.project_name,
+        project_name       : req.body.project_name,
         project_description: req.body.project_description,
         icon: {
             //when using the "single" data come in req.file
-            data: fs.readFileSync('./upload/' + req.file.filename)
+            data: fs.readFileSync('./uploads/' + req.file.filename).toString('base64')
         },
-        project_stage : req.body.project_stage,
-        project_status : req.body.project_status,
-        client_name : req.body.client_name,
-        manager_name:req.body.manager_name
+        project_stage      : req.body.project_stage,
+        project_status     : req.body.project_status,
+        client_name        : req.body.client_name,
+        manager_name       : req.body.manager_name
        
     }
        
-    
+        console.log(project);
         adminService.addProject(project)
        .then((data)=>{
            res.status(200).json({msg:"Project added successfully"});
