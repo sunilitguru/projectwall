@@ -44,8 +44,20 @@ const registerEmployee = (req, res)=>{
 var addProject =  (req,res)=>{
 
    
-        let project = req.body;
-       // let manager_email = req.body.manager_id;
+    var project = {
+        project_name: req.body.project_name,
+        project_description: req.body.project_description,
+        icon: {
+            //when using the "single" data come in req.file
+            data: fs.readFileSync('./upload/' + req.file.filename)
+        },
+        project_stage : req.body.project_stage,
+        project_status : req.body.project_status,
+        client_name : req.body.client_name,
+        manager_name:req.body.manager_name
+       
+    }
+       
     
         adminService.addProject(project)
        .then((data)=>{
