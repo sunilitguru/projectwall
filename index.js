@@ -4,8 +4,11 @@ const app         = express();
 const adminRoutes = require('./routes/adminRoute');
 const  empRoute   = require('./routes/employeeRoute');
 const managerRoute= require('./routes/managerRoute');
+const path = require('path');
 
-
+require("dotenv").config({
+ path: path.join(__dirname, "./.env")
+});
 
 app.use(express.json());
 

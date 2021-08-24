@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const empController = require('../controllers/employeeController');
 
-
+router.post('/login', empController.login);
 router.get('/projects', empController.getAllProjects);
 router.get('events/:id', empController.getAllEvents);
 router.post('/event/:id', empController.addEvent);

@@ -1,5 +1,50 @@
 
 const empService = require('../services/employeeService');
+const User       = require('../schemas/userSchema').userModel;
+const jwt        = require('jsonwebtoken');
+const bcrypt     = require('bcrypt');
+
+
+async function validatePassword(plainPassword, hashedPassword) {
+    //validate password using bcrypt
+    return await bcrypt.compare(plainPassword, hashedPassword);
+   }
+    
+
+ const login = async (req, res) => {
+    try {
+     const { email, password } = req.body;
+     const user = await User.findOne({ email });
+     console.log(user)
+     if (!user){
+          res.status(401).send('Email does not exist');
+     }
+     const validPassword = await validatePassword(password, user.password);
+     console.log(validPassword)
+     console.log(process.env.JWT_SECRET)
+
+     if (!validPassword) {
+         res.status(401).send('password does not match');
+     }
+     //create token using jwt
+     const accessToken = jwt.sign({
+          userId: user._id ,
+          name  : user.name,
+          role  : user.role      
+        },
+         process.env.JWT_SECRET,
+        {
+          expiresIn: "1d"
+        });
+
+     res.status(200).json({
+      data  : { email: user.email, role: user.role },
+      token : accessToken
+     })
+    }catch (error) {
+     res.status(401).json({error : error});
+    }
+};
 
 
 
@@ -148,6 +193,7 @@ module.exports = {
     addEvent       : addEvent,
     updateEvent    : updateEvent ,
     removeEvent    : removeEvent  ,
-    getAllEvents   : getAllEvents
+    getAllEvents   : getAllEvents ,
+    login          : login
 
 };
