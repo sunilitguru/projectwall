@@ -3,6 +3,7 @@ const empService = require('../services/employeeService');
 const User       = require('../schemas/userSchema').userModel;
 const jwt        = require('jsonwebtoken');
 const bcrypt     = require('bcrypt');
+const fs         = require('fs');
 
 
 async function validatePassword(plainPassword, hashedPassword) {
@@ -100,8 +101,25 @@ const getAllEvents = (req,res)=>{
 const addEvent = (req, res)=>{
 
     //get new object of event from request body
-    let newEvent  = req.body;
+   // let newEvent  = req.body;
     let projectId = req.params.id;
+
+    var newEvent = {
+        project_name       : req.body.project_name,
+        user_name          : req.body.user_name,
+        activity           : req.body.activity,
+        type_of_update     : req.body.type_of_update,
+        attachment: {
+            //when using the "single" data come in req.file
+            data: fs.readFileSync('./uploads/' + req.file.filename).toString('base64')
+        },
+        internal_flag      : req.body.internal_flag,
+        external_flag      : req.body.external_flag,
+        description        : req.body.description,
+        projectId          : req.body.projectId
+       
+    }
+    console.log(newEvent)
 
     //send new event object to the service layer
     empService.addEvent(newEvent,projectId)
@@ -130,9 +148,9 @@ const updateEvent = (req,res)=>{
 
     //get event from request for update
     let updEvent  = req.body;
-    let projectId = req.params.id;
+    let eventId = req.params.id;
 
-    empService.updateEvent(updEvent, projectId)
+    empService.updateEvent(updEvent, eventId)
     .then((result) => {
  
         //send successful response to the client 
@@ -157,10 +175,9 @@ const updateEvent = (req,res)=>{
 
 const removeEvent = (req,res)=>{
 
-    let eventId = req.params.e_id;
-    let projectId = req.params.p_id;
+    let eventId = req.params.id;
 
-    empService.removeEvent(eventId, projectId)
+    empService.removeEvent(eventId)
     .then((result) => {
  
         //send successful response to the client 
