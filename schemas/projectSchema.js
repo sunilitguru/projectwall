@@ -25,7 +25,6 @@ project_stage:{
     },
 project_status:{
     type: Number,
- 
     default:0
 },
 client_name:{

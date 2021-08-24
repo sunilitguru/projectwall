@@ -8,20 +8,23 @@ const bcrypt = require('bcrypt');
 
 const registerEmployee = (req, res)=>{
 
+     // convert string password into the hash format
        bcrypt.hash(req.body.password,8,(err,hash)=>{
           if(err){
                 console.log("something went Wrong");
                 res.send(err+"something went wrong");
           }
           else{
+              //create user using new keyword
                 const user = new User({
  
-                     name:req.body.name,
-                     contact_no:req.body.contact_no,
-                     email:req.body.email,
-                     password: hash,
-                     role:req.body.role
+                     name      : req.body.name,
+                     contact_no: req.body.contact_no,
+                     email     : req.body.email,
+                     password  : hash,
+                     role      : req.body.role
                 }) 
+                //save object into the database rows as a document
                 user.save()
                 .then((data)=>{
                 res.status(200).json({
@@ -45,6 +48,7 @@ const registerEmployee = (req, res)=>{
 var addProject =  (req,res)=>{
 
    console.log(req.file)
+   //create project object from req
     var project = {
         project_name       : req.body.project_name,
         project_description: req.body.project_description,
@@ -60,6 +64,7 @@ var addProject =  (req,res)=>{
     }
        
         console.log(project);
+        //send project object to the service layer to perform operation or database
         adminService.addProject(project)
        .then((data)=>{
            res.status(200).json({msg:"Project added successfully"});
