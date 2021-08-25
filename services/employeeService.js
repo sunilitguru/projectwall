@@ -20,6 +20,11 @@ const getAllEvents = (projectId)=>{
         return Event.find({projectId : projectId});
 
    }
+   else{
+
+        throw new Error('project does not exist')
+
+   }
 
 };
 
@@ -39,7 +44,9 @@ const addEvent = async (newEvent, projectId)=>{
         return event;
     }
     else{
-        return new Error('project does not exist')
+
+        throw new Error('project does not exist')
+
     }
 
 
@@ -58,8 +65,9 @@ const updateEvent = async (updateEvent,eventId)=>{
         
      }
      else{
-         //if event does not exist then return error
-         return new Error('event does not exist')
+         //if event does not exist then throw an error
+         throw new Error('event does not exist')
+
      }
 
 
@@ -77,8 +85,9 @@ const removeEvent = async (eventId)=>{
        
     }
     else{
-        //if event does not exist then return erro
-        return new Error('event does not exist')
+        //if event does not exist then throw an error
+        throw new Error('event does not exist')
+
     }
 
 

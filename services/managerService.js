@@ -21,7 +21,7 @@ const changeProjectStatus = (projectId, newStatus)=>{
 
     }
     else {
-        return new Error("project not exist");
+        throw new Error("project does not exist");
     }
 
 
@@ -45,7 +45,7 @@ const changeProjectStage = (newStage,projectId)=>{
 
     }
     else {
-        return new Error("project not exist");
+        throw new Error("project does not exist");
     }
 
 
