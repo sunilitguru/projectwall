@@ -93,6 +93,12 @@ const removeEvent = async (eventId)=>{
 
 };
 
+const getProjectById = (projectId)=>{
+
+    return Project.findOne({_id : projectId});
+
+};
+
 
 
 
@@ -104,6 +110,7 @@ module.exports = {
     addEvent       : addEvent,
     updateEvent    : updateEvent,
     removeEvent    : removeEvent,
-    getAllEvents   : getAllEvents
+    getAllEvents   : getAllEvents,
+    getProjectById : getProjectById
 
 };

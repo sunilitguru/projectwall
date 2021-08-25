@@ -5,6 +5,7 @@ const empController = require('../controllers/employeeController');
 
 router.post('/login', empController.login);
 router.get('/projects', empController.getAllProjects);
+router.get('/project/:id', empController.getProjectById);
 router.get('events/:id', empController.getAllEvents);
 router.post('/event/:id', multer.single('file') ,empController.addEvent);
 router.put('/event/:id', empController.updateEvent);

@@ -200,13 +200,29 @@ const removeEvent = (req,res)=>{
 };
 
 
+const getProjectById = async (req,res)=>{
 
+    let projectId = req.params.id;
+
+    try{
+
+       let project = await empService.getProjectById(projectId);
+       res.status(200).send(project);
+
+    }catch(error){
+
+       res.status(401).json({error : error})
+
+    }
+
+};
 
 
 
 module.exports = {
 
     getAllProjects : getAllProjects,
+    getProjectById : getProjectById,
     addEvent       : addEvent,
     updateEvent    : updateEvent ,
     removeEvent    : removeEvent  ,
